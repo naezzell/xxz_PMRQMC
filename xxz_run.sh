@@ -13,10 +13,10 @@
 
 # prepare Hamiltonian and observable helper files
 g++ -O3 -std=c++11 -o xxz_prepare.bin xxz_prepare.cpp
-./xxz_prepare.bin 10 0.1 0.5
+./xxz_prepare.bin 3 0.1 0.5 1
 
 # run QMC simulation
 g++ -O3 -std=c++11 -o xxz_PMRQMC.bin xxz_PMRQMC.cpp
-./xxz_PMRQMC.bin 10 0.1 0.5
+./xxz_PMRQMC.bin 3 0.1 0.5 1
 
 

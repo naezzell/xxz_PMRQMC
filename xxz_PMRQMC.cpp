@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 	int i,k,o=0; divdiff_init(); divdiff dd(q+4,500); d=&dd; init();
   // performs QMC simulations while saving bitstrings every measurement step
   std::ostringstream oss_bs;
-  oss_bs << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_seed_" << rng_seed << "_bitstrings.txt";
+  oss_bs << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_bias_" << argv[4] << "_seed_" << rng_seed << "_bitstrings.txt";
   std::string sum_bs_fname = oss_bs.str();
   std::ofstream mybsfile (sum_bs_fname);
   if (mybsfile.is_open()) {
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]){
 
   // save things to file
   std::ostringstream oss;
-  oss << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_seed_" << rng_seed << "_summary.txt";
+  oss << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_bias_" << argv[4] << "_seed_" << rng_seed << "_summary.txt";
   std::string sum_fname = oss.str();
   std::ofstream myfile (sum_fname);
   if (myfile.is_open())
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]){
       // input data for simulations
       myfile << "RNG seed = " << rng_seed << std::endl;
       myfile << "Parameters: beta = " << beta << ", Tsteps = " << Tsteps << ", steps = " << steps << std::endl;
-      myfile << "XXZ params: n = " << argv[1] << ", Jp = " << argv[2] << ", delta = " << argv[3] << std::endl;
+      myfile << "XXZ params: n = " << argv[1] << ", Jp = " << argv[2] << ", delta = " << argv[3] << ", bias = " << argv[4] <<  std::endl;
       myfile << "mean(sgn(W)) = " << sgn_sum << std::endl;
       myfile << "std.dev.(sgn(W)) = " << sqrt(over_bins_sum_sgn) << std::endl;
       // warning that qmax was needed

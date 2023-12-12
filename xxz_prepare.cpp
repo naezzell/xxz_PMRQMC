@@ -490,26 +490,29 @@ void output_complex(complex<double> z){
     if(abs(z.imag()) < 1E-8) output << z.real(); else output << "{" << z.real() << "," << z.imag() << "}";
 }
 
-void form_xxz_htxt(int n, float Jp, float delta){
+void form_xxz_htxt(int n, float Jp, float delta, int bias){
   // forms bond-alternating XXZ Hamiltonian
   std::ostringstream oss;
   float odd_z_c = Jp * delta;
   for(int i = 1; i < n; i++){
     if ( i % 2 == 0) {
-      oss << std::endl << Jp << ' ' << i << ' ' << "X " << i+1 << ' ' << "X ";
-      oss << std::endl << Jp << ' ' << i << ' ' << "Y " << i+1 << ' ' << "Y ";
-      oss << std::endl << odd_z_c << ' ' << i << ' ' << "Z " << i+1 << ' ' << "Z ";
+      oss << std::endl << Jp << ' ' << i << ' ' << "X " << i+1 << ' ' << "X";
+      oss << std::endl << Jp << ' ' << i << ' ' << "Y " << i+1 << ' ' << "Y";
+      oss << std::endl << odd_z_c << ' ' << i << ' ' << "Z " << i+1 << ' ' << "Z";
     }
     else {
       if ( i == 1 ) {
-        oss <<  "1 " << i << ' ' << "X " << i+1 << ' ' << "X ";
+        oss <<  "1 " << i << ' ' << "X " << i+1 << ' ' << "X";
       }
       else {
-        oss << std::endl <<  "1 " << i << ' ' << "X " << i+1 << ' ' << "X ";
+        oss << std::endl <<  "1 " << i << ' ' << "X " << i+1 << ' ' << "X";
       }
-      oss << std::endl <<  "1 " << i << ' ' << "Y " << i+1 << ' ' << "Y ";
-      oss << std::endl <<  delta << ' ' << i << ' ' << "Z " << i+1 << ' ' << "Z ";
+      oss << std::endl <<  "1 " << i << ' ' << "Y " << i+1 << ' ' << "Y";
+      oss << std::endl <<  delta << ' ' << i << ' ' << "Z " << i+1 << ' ' << "Z";
     }
+  }
+  if (bias == 1) {
+    oss << std::endl << "0.1 1 Z";
   }
   ofstream myfile ("H.txt");
   if (myfile.is_open())
@@ -525,7 +528,8 @@ void main1(int argc , char* argv[]){
   int n = atoi(argv[1]);
   float Jp = atof(argv[2]);
   float delta = atof(argv[3]);
-  form_xxz_htxt(n, Jp, delta);
+  int bias = atoi(argv[4]);
+  form_xxz_htxt(n, Jp, delta, bias);
 
     //string fileName(argv[1]);  // Reading the name of the input .txt file describing the Hamiltonian
     string fileName = "H.txt";
