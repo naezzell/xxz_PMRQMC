@@ -30,14 +30,19 @@ int main(int argc, char* argv[]){
 	int i,k,o=0; divdiff_init(); divdiff dd(q+4,500); d=&dd; init();
   // performs QMC simulations while saving bitstrings every measurement step
   std::ostringstream oss_bs;
-  oss_bs << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_bias_" << argv[4] << "_seed_" << rng_seed << "_bitstrings.txt";
+  oss_bs << "data/XXZ_" << "n_" << argv[1] << "_Jp_" << argv[2] << "_delta_" << argv[3] << "_bias_" << argv[4] << "_seed_" << rng_seed << "_bitstrings.csv";
   std::string sum_bs_fname = oss_bs.str();
   std::ofstream mybsfile (sum_bs_fname);
   if (mybsfile.is_open()) {
 	for(step=0;step<Tsteps;step++) update();
 	for(measurement_step=0;measurement_step<measurements;measurement_step++){
 		for(step=0;step<stepsPerMeasurement;step++) update(); measure();
-      mybsfile << lattice << std::endl;
+    if ( measurement_step == 0 ){
+      mybsfile << lattice;
+    }
+    else {
+      mybsfile << "," << lattice;
+    }
 	}
   }
   else std::cout << "Unable to open file";
